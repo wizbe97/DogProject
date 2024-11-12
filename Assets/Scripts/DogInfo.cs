@@ -1,14 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class DogInfo : MonoBehaviour
 {
     public DogSO dogData;
-    public Image portraitUI;
-    public TMP_Text breedText;
-    public TMP_Text personalityText;
-    public TMP_Text priceText;
+    public KennelListener kennelListener; // Reference to the KennelListener component
 
     private Personality assignedPersonality;
     private bool personalityAssigned = false;
@@ -22,20 +17,16 @@ public class DogInfo : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    private void OnMouseUp()
     {
-        GameManager.Instance.SelectDog(this); // Notifies GameManager of the selected dog
-        DisplayDogInfo();
-    }
-
-    private void DisplayDogInfo()
-    {
-        if (dogData != null)
+        Debug.Log("DogInfo: OnMouseUp triggered");  // Debug to confirm click event
+        if (kennelListener != null)
         {
-            portraitUI.sprite = dogData.breed.portrait;
-            breedText.text = $"Breed: {dogData.breed.breedName}\nDescription: {dogData.breed.description}";
-            personalityText.text = $"Personality: {assignedPersonality}";
-            priceText.text = "Price: $" + dogData.breed.price;
+            kennelListener.ShowDogInfo(this);
+        }
+        else
+        {
+            Debug.LogWarning("DogInfo: KennelListener reference is missing!");
         }
     }
 
@@ -43,5 +34,4 @@ public class DogInfo : MonoBehaviour
     {
         return assignedPersonality;
     }
-
 }

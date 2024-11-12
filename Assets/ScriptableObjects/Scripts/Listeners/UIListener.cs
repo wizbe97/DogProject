@@ -1,38 +1,60 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIListener : MonoBehaviour
 {
-    [SerializeField] private PlayerBalanceManager balanceManager;
-    [SerializeField] private GameEventSO onBalanceChangedEvent;
-    [SerializeField] private TMP_Text balanceText;
+    [Header("UI Elements")]
+    public GameEventSO onDogSelectedEvent;   // Event to trigger when a dog is selected
+    public GameObject dogInfoPanel;          // The UI panel for dog information
+    public GameObject closeDogInfoPanel;
+    public TMP_Text breedText;
+    public Image portraitUI;
+    public TMP_Text personalityText;
+    public TMP_Text priceText;
+    public KennelManager kennelManager;      // Reference to KennelManager
 
     private void OnEnable()
     {
-        if (onBalanceChangedEvent != null)
+        if (onDogSelectedEvent != null)
         {
-            onBalanceChangedEvent.RegisterListener(UpdateBalanceText);
+            onDogSelectedEvent.RegisterListener(ShowDogInfoPanel);
         }
     }
 
     private void OnDisable()
     {
-        if (onBalanceChangedEvent != null)
+        if (onDogSelectedEvent != null)
         {
-            onBalanceChangedEvent.UnregisterListener(UpdateBalanceText);
+            onDogSelectedEvent.UnregisterListener(ShowDogInfoPanel);
         }
     }
 
-    private void Start()
+    private void ShowDogInfoPanel()
     {
-        UpdateBalanceText();
+        dogInfoPanel.SetActive(true);
+        closeDogInfoPanel.SetActive(true);
+
+        // Update the UI
+        UpdateDogInfo();
     }
 
-    private void UpdateBalanceText()
+    private void UpdateDogInfo()
     {
-        if (balanceText != null && balanceManager != null)
+        DogSO selectedDog = kennelManager.selectedDogData;
+
+        if (selectedDog != null)
         {
-            balanceText.text = "$" + balanceManager.playerBalance.balance;
+            portraitUI.sprite = selectedDog.breed.portrait;
+            breedText.text = $"Breed: {selectedDog.breed.breedName}\nDescription: {selectedDog.breed.description}";
+            personalityText.text = $"Personality: {kennelManager.selectedPersonality}";
+            priceText.text = "Price: $" + selectedDog.breed.price;
         }
+    }
+
+    public void HideDogInfoPanel()
+    {
+        dogInfoPanel.SetActive(false);
+        closeDogInfoPanel.SetActive(false);
     }
 }
