@@ -4,5 +4,4 @@ using UnityEngine;
 public class GameManager : ScriptableObject
 {
     public PlayerBalanceManager playerBalanceManager;
-    public KennelManager kennelManager;
 }

@@ -3,7 +3,10 @@ guid: 9626f4dc53fc38a4b844c0bae43abcc8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - dogData: {instanceID: 0}
+  - dogSelectedEventSO: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  - dogPurchasedEventSO: {fileID: 11400000, guid: 6167f1a2c51ddbe42ba4cf6de52bbda6, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

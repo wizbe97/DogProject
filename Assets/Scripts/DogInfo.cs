@@ -3,12 +3,18 @@ using UnityEngine;
 public class DogInfo : MonoBehaviour
 {
     public DogSO dogData;
-    public KennelListener kennelListener;
+    public GameEventSO dogSelectedEventSO;
 
     private Personality assignedPersonality;
     private bool personalityAssigned = false;
 
     private void Start()
+    {
+        // Assign a random personality at the start of the game if not already assigned
+        AssignRandomPersonality();
+    }
+
+    private void AssignRandomPersonality()
     {
         if (!personalityAssigned)
         {
@@ -19,10 +25,8 @@ public class DogInfo : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (kennelListener != null)
-        {
-            kennelListener.ShowDogInfo(this);
-        }
+        Debug.Log("Dog selected: " + dogData.dogName + " with personality: " + assignedPersonality);
+        dogSelectedEventSO.Raise(this); // Raise the event with this DogInfo instance
     }
 
     public Personality GetAssignedPersonality()
