@@ -1,44 +1,76 @@
 using UnityEngine;
+using TMPro;
 
 public class KennelListener : MonoBehaviour
 {
-    public GameEventSO onDogSelectedEvent;       // Event for dog selection
-    public KennelManager kennelManager;          // Reference to KennelManager
-    public GameManager gameManager;              // Reference to GameManager for balance checks
-    public GameObject dogInfoPanel;              // Reference to the UI panel for displaying dog info
+    public GameEventSO onDogSelectedEvent;
+    public GameEventSO onBalanceChangedEvent; 
+    public KennelManager kennelManager;
+    public GameManager gameManager;
+    public TMP_InputField nameInputField;
 
-    private DogInfo selectedDogInfo;             // Reference to the selected DogInfo component
-    private bool panelVisible = false;           // Track panel visibility state
+    private DogInfo selectedDogInfo;
 
     public void ShowDogInfo(DogInfo dogInfo)
     {
-        Debug.Log("KennelListener: ShowDogInfo called");  // Debug to confirm selection
-
         selectedDogInfo = dogInfo;
-
-        // Set the selected dog's data and unique personality in KennelManager
         kennelManager.SetSelectedDog(dogInfo.dogData, dogInfo.GetAssignedPersonality());
-
-        // Raise event to notify UIListener of the selected dog
         onDogSelectedEvent?.RaiseEvent();
+    }
 
-        // Show the UI panel if it's not already visible
-        if (!panelVisible)
+    public void PurchaseSelectedDog()
+    {
+        if (selectedDogInfo == null)
         {
-            dogInfoPanel.SetActive(true);
-            panelVisible = true;
-            Debug.Log("KennelListener: Dog info panel activated");
+            Debug.Log("No dog selected for purchase.");
+            return;
+        }
+
+        int dogPrice = selectedDogInfo.dogData.breed.price;
+
+        if (gameManager.playerBalanceManager.CanAfford(dogPrice))
+        {
+            gameManager.playerBalanceManager.DeductBalance(dogPrice);
+            onBalanceChangedEvent?.RaiseEvent();
+            PromptForDogName();
+        }
+        else
+        {
+            Debug.Log("Not enough balance to purchase this dog.");
         }
     }
 
-    public void HideDogInfoPanel()
+    private void PromptForDogName()
     {
-        // Hide the UI panel and reset state
-        if (panelVisible)
+        nameInputField.gameObject.SetActive(true);
+        nameInputField.onEndEdit.AddListener(OnNameEntered);
+    }
+
+    private void OnNameEntered(string enteredName)
+    {
+        if (!string.IsNullOrEmpty(enteredName) && selectedDogInfo != null)
         {
-            dogInfoPanel.SetActive(false);
-            panelVisible = false;
-            Debug.Log("KennelListener: Dog info panel deactivated");
+            DogSO purchasedDogData = ScriptableObject.CreateInstance<DogSO>();
+            purchasedDogData.breed = selectedDogInfo.dogData.breed;
+            purchasedDogData.personality = selectedDogInfo.GetAssignedPersonality();
+            purchasedDogData.dogName = enteredName;
+
+#if UNITY_EDITOR
+            string path = $"Assets/ScriptableObjects/Dog/Dogs/{enteredName}.asset";
+            UnityEditor.AssetDatabase.CreateAsset(purchasedDogData, path);
+            UnityEditor.AssetDatabase.SaveAssets();
+            UnityEditor.AssetDatabase.Refresh();
+#endif
+
+            Debug.Log("Dog purchased and named: " + purchasedDogData.dogName);
+
+            nameInputField.gameObject.SetActive(false);
+            nameInputField.onEndEdit.RemoveListener(OnNameEntered);
+            nameInputField.text = "";
+        }
+        else
+        {
+            Debug.LogWarning("Please enter a valid name for the dog.");
         }
     }
 }

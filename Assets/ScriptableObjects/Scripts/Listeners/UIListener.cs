@@ -5,20 +5,26 @@ using UnityEngine.UI;
 public class UIListener : MonoBehaviour
 {
     [Header("UI Elements")]
-    public GameEventSO onDogSelectedEvent;   // Event to trigger when a dog is selected
-    public GameObject dogInfoPanel;          // The UI panel for dog information
-    public GameObject closeDogInfoPanel;
+    public GameEventSO onDogSelectedEvent;
+    public GameEventSO onBalanceChangedEvent;  
+    public GameObject dogInfoPanel;
     public TMP_Text breedText;
     public Image portraitUI;
     public TMP_Text personalityText;
     public TMP_Text priceText;
-    public KennelManager kennelManager;      // Reference to KennelManager
+    public TMP_Text balanceText;
+    public KennelManager kennelManager; 
+    public PlayerBalanceManager playerBalanceManager;  
 
     private void OnEnable()
     {
         if (onDogSelectedEvent != null)
         {
             onDogSelectedEvent.RegisterListener(ShowDogInfoPanel);
+        }
+        if (onBalanceChangedEvent != null)
+        {
+            onBalanceChangedEvent.RegisterListener(UpdateBalanceDisplay);
         }
     }
 
@@ -28,14 +34,15 @@ public class UIListener : MonoBehaviour
         {
             onDogSelectedEvent.UnregisterListener(ShowDogInfoPanel);
         }
+        if (onBalanceChangedEvent != null)
+        {
+            onBalanceChangedEvent.UnregisterListener(UpdateBalanceDisplay);
+        }
     }
 
     private void ShowDogInfoPanel()
     {
         dogInfoPanel.SetActive(true);
-        closeDogInfoPanel.SetActive(true);
-
-        // Update the UI
         UpdateDogInfo();
     }
 
@@ -52,9 +59,14 @@ public class UIListener : MonoBehaviour
         }
     }
 
+    private void UpdateBalanceDisplay()
+    {
+        balanceText.text = "Balance: $" + playerBalanceManager.playerBalance.balance;
+    }
+
     public void HideDogInfoPanel()
     {
+        // Deactivate the panel
         dogInfoPanel.SetActive(false);
-        closeDogInfoPanel.SetActive(false);
     }
 }

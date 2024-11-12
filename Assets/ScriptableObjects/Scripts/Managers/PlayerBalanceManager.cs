@@ -18,9 +18,5 @@ public class PlayerBalanceManager : ScriptableObject
             playerBalance.balance -= amount;
             onBalanceChangedEvent?.RaiseEvent();
         }
-        else
-        {
-            Debug.Log("Not enough balance to buy this dog.");
-        }
     }
 }

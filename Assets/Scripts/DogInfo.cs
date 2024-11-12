@@ -3,7 +3,7 @@ using UnityEngine;
 public class DogInfo : MonoBehaviour
 {
     public DogSO dogData;
-    public KennelListener kennelListener; // Reference to the KennelListener component
+    public KennelListener kennelListener;
 
     private Personality assignedPersonality;
     private bool personalityAssigned = false;
@@ -19,14 +19,9 @@ public class DogInfo : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Debug.Log("DogInfo: OnMouseUp triggered");  // Debug to confirm click event
         if (kennelListener != null)
         {
             kennelListener.ShowDogInfo(this);
-        }
-        else
-        {
-            Debug.LogWarning("DogInfo: KennelListener reference is missing!");
         }
     }
 
