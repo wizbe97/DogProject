@@ -3,7 +3,7 @@ using UnityEngine;
 public class DogInfo : MonoBehaviour
 {
     public DogSO dogData;
-    public GameEventSO dogSelectedEventSO;
+    public GameEventSO dogSelectedEvent;
     public GameManagerSO gameManager;
 
     private Personality assignedPersonality;
@@ -29,8 +29,8 @@ public class DogInfo : MonoBehaviour
         gameManager.kennelManager.SelectDog(dogData);
         gameManager.kennelManager.selectedPersonality = assignedPersonality;
         
-        if (dogSelectedEventSO != null)
-            dogSelectedEventSO.Raise();
+        if (dogSelectedEvent != null)
+            dogSelectedEvent.Raise();
     }
 
     public Personality GetAssignedPersonality()

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PurchaseManager : MonoBehaviour
 {
     public GameManagerSO gameManager;
+    public GameEventSO onPurchaseEvent;
 
     public void AttemptPurchaseSelectedDog()
     {
@@ -13,20 +14,17 @@ public class PurchaseManager : MonoBehaviour
         }
     }
 
-    // For Dog Purchases
     private void AttemptPurchaseDog(DogSO selectedDogData)
     {
         int dogPrice = selectedDogData.breed.price;
         if (gameManager.playerBalanceManager.CanAfford(dogPrice))
         {
             gameManager.playerBalanceManager.DeductBalance(dogPrice);
-            Debug.Log("Purchase successful! Dog purchased: " + selectedDogData.dogName);
-            gameManager.kennelManager.ClearSelectedDog(); // Clear selection after purchase
-        }
-        else
-        {
-            Debug.LogWarning("Not enough balance to purchase this dog.");
+            gameManager.kennelManager.ClearSelectedDog();
+            Debug.Log("Dog attempt purchase event received and alerting UI Manager and Create Dog");
+
+            // Raise event to notify UIManager and CreateDog
+            onPurchaseEvent.Raise();
         }
     }
-    // Add More Purchase Options Here
 }

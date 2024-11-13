@@ -5,6 +5,7 @@ public class KennelManagerSO : ScriptableObject
 {
     public DogSO selectedDogData;
     public Personality selectedPersonality;
+    public string dogName; // Store the player's chosen name here
 
     public void SelectDog(DogSO dogData)
     {
@@ -21,9 +22,15 @@ public class KennelManagerSO : ScriptableObject
         return selectedPersonality;
     }
 
+    public void SetDogName(string name)
+    {
+        dogName = name;
+    }
+
     public void ClearSelectedDog()
     {
         selectedDogData = null;
         selectedPersonality = default;
+        dogName = "";
     }
 }

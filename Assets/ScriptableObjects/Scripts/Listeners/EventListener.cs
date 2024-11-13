@@ -11,7 +11,7 @@ public class EventListener : MonoBehaviour, IGameEventListener
         public UnityEvent response;
     }
 
-    public List<EventResponsePair> eventResponsePairs = new List<EventResponsePair>();
+    public List<EventResponsePair> eventResponsePairs = new();
 
     private void OnEnable()
     {

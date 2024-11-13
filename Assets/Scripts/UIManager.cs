@@ -5,8 +5,10 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public GameManagerSO gameManager;
+    public GameEventSO dogNameReceivedEvent;
 
     [Header("Dog Info UI")]
+    public TMP_InputField nameInputField;
     public GameObject dogInfoPanel;
     public TMP_Text breedText;
     public Image portraitUI;
@@ -32,13 +34,38 @@ public class UIManager : MonoBehaviour
             personalityText.text = "Personality: " + selectedPersonality;
             priceText.text = "Price: $" + selectedDogData.breed.price;
             portraitUI.sprite = selectedDogData.breed.portrait;
-            dogInfoPanel.SetActive(true);
+            dogInfoPanel.SetActive(true); 
         }
     }
 
     public void HideDogInfoPanel()
     {
-        dogInfoPanel.SetActive(false);
+        dogInfoPanel.SetActive(false); 
+        nameInputField.gameObject.SetActive(false);
+    }
+
+    public void ShowNameInputPrompt()
+    {
+        nameInputField.gameObject.SetActive(true);
+        nameInputField.onEndEdit.AddListener(OnNameEntered);
+    }
+
+    private void OnNameEntered(string enteredName)
+    {
+        if (!string.IsNullOrEmpty(enteredName))
+        {
+            gameManager.kennelManager.SetDogName(enteredName);
+            dogNameReceivedEvent.Raise();
+            Debug.Log("Dog name received: " + enteredName);
+            nameInputField.gameObject.SetActive(false);
+            nameInputField.onEndEdit.RemoveListener(OnNameEntered);
+            nameInputField.text = "";
+
+        }
+        else
+        {
+            Debug.LogWarning("Please enter a valid name for the dog.");
+        }
     }
 
     public void UpdateBalanceUI()
