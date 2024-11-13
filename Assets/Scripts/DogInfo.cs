@@ -4,13 +4,13 @@ public class DogInfo : MonoBehaviour
 {
     public DogSO dogData;
     public GameEventSO dogSelectedEventSO;
+    public GameManagerSO gameManager;
 
     private Personality assignedPersonality;
     private bool personalityAssigned = false;
 
     private void Start()
     {
-        // Assign a random personality at the start of the game if not already assigned
         AssignRandomPersonality();
     }
 
@@ -26,7 +26,11 @@ public class DogInfo : MonoBehaviour
     private void OnMouseUp()
     {
         Debug.Log("Dog selected: " + dogData.dogName + " with personality: " + assignedPersonality);
-        dogSelectedEventSO.Raise(this); // Raise the event with this DogInfo instance
+        gameManager.kennelManager.SelectDog(dogData);
+        gameManager.kennelManager.selectedPersonality = assignedPersonality;
+        
+        if (dogSelectedEventSO != null)
+            dogSelectedEventSO.Raise();
     }
 
     public Personality GetAssignedPersonality()

@@ -5,12 +5,11 @@ using UnityEngine;
 public class GameEventSO : ScriptableObject
 {
     private List<IGameEventListener> listeners = new List<IGameEventListener>();
-
-    public void Raise(object parameter = null)
+    public void Raise()
     {
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
-            listeners[i].OnEventRaised(parameter);
+            listeners[i].OnEventRaised();
         }
     }
 
