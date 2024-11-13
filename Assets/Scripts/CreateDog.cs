@@ -3,7 +3,6 @@ using UnityEngine;
 public class CreateDog : MonoBehaviour
 {
     public GameManagerSO gameManager;
-
     public void CreateDogObject()
     {
         DogSO selectedDogData = gameManager.kennelManager.GetSelectedDog();
@@ -25,12 +24,12 @@ public class CreateDog : MonoBehaviour
 
             Debug.Log("Dog created and named: " + newDog.dogName);
 
-            // Deduct balance only after the dog has been successfully created
             int dogPrice = selectedDogData.breed.price;
             gameManager.playerBalanceManager.DeductBalance(dogPrice);
 
-            // Clear the selection after the dog has been created
             gameManager.kennelManager.ClearSelectedDog();
+            FindAnyObjectByType<UIManager>().HideDogInfoPanel();
         }
     }
+
 }
