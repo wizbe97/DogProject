@@ -34,13 +34,13 @@ public class UIManager : MonoBehaviour
             personalityText.text = "Personality: " + selectedPersonality;
             priceText.text = "Price: $" + selectedDogData.breed.price;
             portraitUI.sprite = selectedDogData.breed.portrait;
-            dogInfoPanel.SetActive(true); 
+            dogInfoPanel.SetActive(true);
         }
     }
 
     public void HideDogInfoPanel()
     {
-        dogInfoPanel.SetActive(false); 
+        dogInfoPanel.SetActive(false);
         nameInputField.gameObject.SetActive(false);
     }
 
@@ -55,12 +55,12 @@ public class UIManager : MonoBehaviour
         if (!string.IsNullOrEmpty(enteredName))
         {
             gameManager.kennelManager.SetDogName(enteredName);
-            dogNameReceivedEvent.Raise();
+            dogNameReceivedEvent.Raise(); // Trigger dog creation in CreateDog
+
             Debug.Log("Dog name received: " + enteredName);
             nameInputField.gameObject.SetActive(false);
             nameInputField.onEndEdit.RemoveListener(OnNameEntered);
             nameInputField.text = "";
-
         }
         else
         {

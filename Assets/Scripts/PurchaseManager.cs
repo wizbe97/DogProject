@@ -3,7 +3,7 @@ using UnityEngine;
 public class PurchaseManager : MonoBehaviour
 {
     public GameManagerSO gameManager;
-    public GameEventSO onPurchaseEvent;
+    public GameEventSO onPurchaseEvent; // Event to trigger naming and creation
 
     public void AttemptPurchaseSelectedDog()
     {
@@ -19,12 +19,13 @@ public class PurchaseManager : MonoBehaviour
         int dogPrice = selectedDogData.breed.price;
         if (gameManager.playerBalanceManager.CanAfford(dogPrice))
         {
-            gameManager.playerBalanceManager.DeductBalance(dogPrice);
-            gameManager.kennelManager.ClearSelectedDog();
-            Debug.Log("Dog attempt purchase event received and alerting UI Manager and Create Dog");
-
-            // Raise event to notify UIManager and CreateDog
+            // Raise the event to prompt naming the dog without deducting balance yet
             onPurchaseEvent.Raise();
+            Debug.Log("Purchase can proceed. Awaiting dog name input.");
+        }
+        else
+        {
+            Debug.LogWarning("Not enough balance to purchase this dog.");
         }
     }
 }
