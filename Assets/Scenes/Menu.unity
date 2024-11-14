@@ -247,7 +247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6257328436824089157, guid: 75f9d33bc66d81746b90cf7ea14dfeb0, type: 3}
       propertyPath: m_text
-      value: LOAD 0
+      value: AUTOSAVE
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

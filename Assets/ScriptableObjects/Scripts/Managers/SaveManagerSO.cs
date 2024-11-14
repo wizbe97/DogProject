@@ -55,12 +55,6 @@ public class SaveManagerSO : ScriptableObject
                 dog.personality = dogData.personality;
                 dog.tricks = dogData.tricks;
                 dog.bark = dogData.bark;
-#if UNITY_EDITOR
-                string path = $"Assets/ScriptableObjects/Dog/Dogs/PlayerDogs/{dog.dogName}.asset";
-                UnityEditor.AssetDatabase.CreateAsset(dog, path);
-                UnityEditor.AssetDatabase.SaveAssets();
-                UnityEditor.AssetDatabase.Refresh();
-#endif
                 gameManager.dogManager.ownedDogs.Add(dog);
             }
             Debug.Log("Owned dogs loaded from JSON");
@@ -93,6 +87,7 @@ public class SaveManagerSO : ScriptableObject
             string json = File.ReadAllText(CombinePath(SaveFileBalancePath, currentSlot));
             BalanceData balanceData = JsonUtility.FromJson<BalanceData>(json);
             gameManager.playerBalanceManager.playerBalance.balance = balanceData.balance;
+            gameManager.playerBalanceManager.onBalanceChangedEvent.Raise();
         }
     }
 
