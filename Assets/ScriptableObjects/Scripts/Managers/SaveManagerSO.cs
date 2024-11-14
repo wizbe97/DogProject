@@ -138,6 +138,11 @@ public class SaveManagerSO : ScriptableObject
 
     public bool IsDataSaved(int slot)
     {
+        saveDirectory = Path.Combine(Application.persistentDataPath, "Saves");
+        if (!Directory.Exists(saveDirectory))
+        {
+            Directory.CreateDirectory(saveDirectory);
+        }
         string combinedPath = CombinePath(SaveFileDogPath, slot);
         return File.Exists(combinedPath);
     }
