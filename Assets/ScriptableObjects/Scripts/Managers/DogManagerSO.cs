@@ -15,4 +15,9 @@ public class DogManagerSO : ScriptableObject
     {
         return new List<DogSO>(ownedDogs);
     }
+
+    public void ClearDoglist()
+    {
+        ownedDogs.Clear();
+    }
 }

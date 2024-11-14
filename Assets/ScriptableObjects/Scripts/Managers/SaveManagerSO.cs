@@ -14,10 +14,11 @@ public class SaveManagerSO : ScriptableObject
     private string saveDirectory;
 
     public int currentSlot = 1;
+    public int autoSaveSlot = 0;
 
     public void SaveOwnedDogs(bool isAutoSave = false)
     {
-        CheckAutoSave(isAutoSave);
+        CheckAutoSave();
 
         List<DogData> dogDataList = new List<DogData>();
         foreach (DogSO dog in gameManager.dogManager.ownedDogs)
@@ -25,7 +26,7 @@ public class SaveManagerSO : ScriptableObject
             DogData data = new DogData
             {
                 dogName = dog.dogName,
-                breedName = dog.breed.name,
+                breed = dog.breed,
                 personality = dog.personality,
                 tricks = dog.tricks,
                 bark = dog.bark
@@ -34,7 +35,7 @@ public class SaveManagerSO : ScriptableObject
         }
 
         string json = JsonUtility.ToJson(new DogDataWrapper { dogs = dogDataList });
-        File.WriteAllText(CombinePath(SaveFileDogPath, currentSlot), json);
+        File.WriteAllText(CombinePath(SaveFileDogPath, isAutoSave ? 0 : currentSlot), json);
         Debug.Log("Owned dogs saved to slot: " + currentSlot);
     }
 
@@ -50,7 +51,7 @@ public class SaveManagerSO : ScriptableObject
             {
                 DogSO dog = CreateInstance<DogSO>();
                 dog.dogName = dogData.dogName;
-                dog.breed = FindBreedByName(dogData.breedName);
+                dog.breed = dogData.breed;
                 dog.personality = dogData.personality;
                 dog.tricks = dogData.tricks;
                 dog.bark = dogData.bark;
@@ -66,16 +67,22 @@ public class SaveManagerSO : ScriptableObject
         }
         else
         {
+            StartEmpty();
             Debug.LogWarning("No save file found, starting with empty owned dogs list.");
         }
     }
 
+    private void StartEmpty()
+    {
+        gameManager.dogManager.ClearDoglist();
+        gameManager.playerBalanceManager.ClearBalance();
+    }
     public void SaveBalance(bool isAutoSave = false)
     {
-        CheckAutoSave(isAutoSave);
+        CheckAutoSave();
 
         string json = JsonUtility.ToJson(new BalanceData { balance = gameManager.playerBalanceManager.playerBalance.balance });
-        File.WriteAllText(CombinePath(SaveFileBalancePath, currentSlot), json);
+        File.WriteAllText(CombinePath(SaveFileBalancePath, isAutoSave ? 0 : currentSlot), json);
         Debug.Log("Balance saved to slot: " + currentSlot);
     }
 
@@ -89,25 +96,19 @@ public class SaveManagerSO : ScriptableObject
         }
     }
 
-    private void CheckAutoSave(bool isAutoSave)
+    private void CheckAutoSave()
     {
+        Debug.Log("CURRENT SLOT:" + currentSlot);
         //we make sure we don't override slot 0 when saving manually because slot 0 will be kept for auto saving
-        if (isAutoSave)
+        if (currentSlot == 0)
         {
-            currentSlot = 0;
-        }
-        else
-        {
-            if (currentSlot == 0)
+            //loop through slots to see if we have a empty slot to manually save
+            for (int i = 1; i < 4; i++)
             {
-                //loop through slots to see if we have a empty slot to manually save
-                for (int i = 1; i < 4; i++)
+                if (!IsDataSaved(i))
                 {
-                    if (!IsDataSaved(i))
-                    {
-                        currentSlot = i;
-                        break;
-                    }
+                    currentSlot = i;
+                    break;
                 }
             }
         }
@@ -158,15 +159,15 @@ public class SaveManagerSO : ScriptableObject
     {
         return Path.Combine(saveDirectory, $"{path}_{slot}");
     }
-    private DogBreedSO FindBreedByName(string breedName)
-    {
-        DogBreedSO breed = Resources.Load<DogBreedSO>($"Breeds/{breedName}");
-        if (breed == null)
-        {
-            Debug.LogError($"Breed '{breedName}' not found in Resources/Dog/Breeds/. Please check the asset name and location.");
-        }
-        return breed;
-    }
+    // private DogBreedSO FindBreedByName(string breedName)
+    // {
+    //     DogBreedSO breed = Resources.Load<DogBreedSO>($"Breeds/{breedName}");
+    //     if (breed == null)
+    //     {
+    //         Debug.LogError($"Breed '{breedName}' not found in Resources/Dog/Breeds/. Please check the asset name and location.");
+    //     }
+    //     return breed;
+    // }
 
 
 }
@@ -180,7 +181,7 @@ public class DogDataWrapper
 public class DogData
 {
     public string dogName;
-    public string breedName;
+    public DogBreedSO breed;
     public AudioClip bark;
     public Personality personality;
     public Tricks[] tricks;

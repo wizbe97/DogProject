@@ -141,6 +141,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1492423789595494615, guid: 75f9d33bc66d81746b90cf7ea14dfeb0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2410578752029094309, guid: 75f9d33bc66d81746b90cf7ea14dfeb0, type: 3}
       propertyPath: saveManager
       value: 
@@ -156,6 +160,10 @@ PrefabInstance:
     - target: {fileID: 4236618021190656314, guid: 75f9d33bc66d81746b90cf7ea14dfeb0, type: 3}
       propertyPath: m_Name
       value: MenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259036512969055676, guid: 75f9d33bc66d81746b90cf7ea14dfeb0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5299509046148361017, guid: 75f9d33bc66d81746b90cf7ea14dfeb0, type: 3}
       propertyPath: m_Pivot.x

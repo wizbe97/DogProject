@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593df2abe9da76646a95e7ad32a72067, type: 3}
-  m_Name: PlayerBalance
+  m_Script: {fileID: 11500000, guid: b6009547facf7ad48b604a5a9f69ee75, type: 3}
+  m_Name: 12345.
   m_EditorClassIdentifier: 
-  balance: 0
-  startingBalace: 10000
+  dogName: 12345.
+  breed: {fileID: 11400000, guid: f1641348cf49b7343ad1e189bb931a79, type: 2}
+  bark: {fileID: 0}
+  personality: 0
+  tricks: 
