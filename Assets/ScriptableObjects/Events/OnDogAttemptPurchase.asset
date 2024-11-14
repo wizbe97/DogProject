@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6009547facf7ad48b604a5a9f69ee75, type: 3}
-  m_Name: asdfasdf
+  m_Script: {fileID: 11500000, guid: 08d527ded4d7d5246b0f5a5838d8ca21, type: 3}
+  m_Name: OnDogAttemptPurchase
   m_EditorClassIdentifier: 
-  dogName: asdfasdf
-  breed: {fileID: 11400000, guid: 28190efb5046e244c9643587ed2e7301, type: 2}
-  bark: {fileID: 0}
-  personality: 3
-  tricks: 

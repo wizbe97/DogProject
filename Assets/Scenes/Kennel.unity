@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 55940440}
   - component: {fileID: 55940439}
   - component: {fileID: 55940438}
+  - component: {fileID: 55940441}
   m_Layer: 5
   m_Name: PurchaseDog
   m_TagString: Untagged
@@ -205,9 +206,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1982179608}
-        m_TargetAssemblyTypeName: KennelListener, Assembly-CSharp
-        m_MethodName: PurchaseSelectedDog
+      - m_Target: {fileID: 55940441}
+        m_TargetAssemblyTypeName: ButtonClickManager, Assembly-CSharp
+        m_MethodName: RaiseEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -216,7 +217,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &55940439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +256,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55940436}
   m_CullTransparentMesh: 1
+--- !u!114 &55940441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55940436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06837595e86579b4a93c5409c7a6160f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToRaise: {fileID: 11400000, guid: 6167f1a2c51ddbe42ba4cf6de52bbda6, type: 2}
+--- !u!1 &211381906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211381909}
+  - component: {fileID: 211381908}
+  - component: {fileID: 211381910}
+  m_Layer: 0
+  m_Name: PurchaseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &211381908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211381906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6efcb00e2517e0a47b1503bc179200b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
+  onPurchaseEvent: {fileID: 11400000, guid: 37c1a744a81404049b08532034f2c8c3, type: 2}
+--- !u!4 &211381909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211381906}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1139.4529, y: 569.9381, z: 5.493547}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &211381910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211381906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d759434773d6241a21e1dae7e169a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventResponsePairs:
+  - gameEvent: {fileID: 11400000, guid: 6167f1a2c51ddbe42ba4cf6de52bbda6, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 211381908}
+          m_TargetAssemblyTypeName: PurchaseManager, Assembly-CSharp
+          m_MethodName: AttemptPurchaseSelectedDog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &224675453
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +412,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 5f4992d9142e49d49ae5425358d2fa7e, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!212 &224675456
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -363,7 +454,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.67405117, g: 0.764151, b: 0.09011213, a: 1}
   m_FlipX: 0
@@ -383,12 +474,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224675453}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.25, y: 2.92, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1133.2029, y: -567.0181, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &227892666
 GameObject:
@@ -449,7 +540,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.8666667, g: 0.49411765, b: 0.49411765, a: 1}
   m_FlipX: 0
@@ -469,12 +560,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227892666}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.26, y: -2.56, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1144.7129, y: -572.4981, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &227892669
 CircleCollider2D:
@@ -524,7 +615,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: b273bc2e7a4abe2469186288c7549011, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!1 &299999324
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,11 +643,11 @@ Transform:
   m_GameObject: {fileID: 299999324}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.904149, y: 1.3488764, z: -0.017492572}
+  m_LocalPosition: {x: -1134.7229, y: -567.39813, z: -5.493547}
   m_LocalScale: {x: 7.578071, y: 4.424794, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1172548614}
+  m_Father: {fileID: 899712071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &299999326
 SpriteRenderer:
@@ -597,7 +689,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.4339623, g: 0.2654382, b: 0.08392666, a: 1}
   m_FlipX: 0
@@ -842,11 +934,11 @@ Transform:
   m_GameObject: {fileID: 383500225}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.695851, y: 1.3488764, z: -0.017492572}
+  m_LocalPosition: {x: -1144.3229, y: -567.39813, z: -5.493547}
   m_LocalScale: {x: 7.578071, y: 4.424794, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1172548614}
+  m_Father: {fileID: 899712071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &383500227
 SpriteRenderer:
@@ -888,7 +980,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.4339623, g: 0.2654382, b: 0.08392666, a: 1}
   m_FlipX: 0
@@ -912,8 +1004,10 @@ GameObject:
   - component: {fileID: 402913363}
   - component: {fileID: 402913362}
   - component: {fileID: 402913361}
+  - component: {fileID: 402913365}
+  - component: {fileID: 402913367}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1003,6 +1097,88 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &402913365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402913360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15827e125cc31c747aee6996ccb04f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
+  dogNameReceivedEvent: {fileID: 11400000, guid: a4240a9930754f14fa1bf09628dd6ca9, type: 2}
+  nameInputField: {fileID: 1007689629}
+  dogInfoPanel: {fileID: 1844626063}
+  breedText: {fileID: 1031377267}
+  portraitUI: {fileID: 986490987}
+  personalityText: {fileID: 1989398024}
+  priceText: {fileID: 1238781044}
+  balanceText: {fileID: 1529848757}
+--- !u!114 &402913367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402913360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d759434773d6241a21e1dae7e169a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventResponsePairs:
+  - gameEvent: {fileID: 11400000, guid: 64a055049b440644094cd249d121e68f, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 402913365}
+          m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+          m_MethodName: UpdateBalanceUI
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - gameEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 402913365}
+          m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+          m_MethodName: ShowDogInfoPanel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - gameEvent: {fileID: 11400000, guid: bdbf921a7140ac34d8159573df0828f8, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 402913365}
+          m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+          m_MethodName: HideDogInfoPanel
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &448176355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,7 +1238,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.8666667, g: 0.49411765, b: 0.49411765, a: 1}
   m_FlipX: 0
@@ -1082,12 +1258,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 448176355}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.58, y: -3.02, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1143.0328, y: -572.9581, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &448176358
 CircleCollider2D:
@@ -1137,7 +1313,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: b273bc2e7a4abe2469186288c7549011, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,7 +1519,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 67541ea7c0ebf294f8fa4a93be762183, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!212 &539835026
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1383,7 +1561,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.49411765, g: 0.8666667, b: 0.5605278, a: 1}
   m_FlipX: 0
@@ -1403,12 +1581,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539835023}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.370001, y: -2.83, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1134.0829, y: -572.7681, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &553926538
 GameObject:
@@ -1819,7 +1997,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.8666667, g: 0.49411765, b: 0.49411765, a: 1}
   m_FlipX: 0
@@ -1839,12 +2017,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884280344}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.37, y: -1.62, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1141.8229, y: -571.5581, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &884280347
 CircleCollider2D:
@@ -1894,7 +2072,135 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: b273bc2e7a4abe2469186288c7549011, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
+--- !u!1 &899712070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 899712071}
+  m_Layer: 0
+  m_Name: Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &899712071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899712070}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1140.6271, y: 568.747, z: 5.476054}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1139492374}
+  - {fileID: 1317055132}
+  - {fileID: 383500226}
+  - {fileID: 299999325}
+  - {fileID: 1312320478}
+  m_Father: {fileID: 1172548614}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &912605079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912605082}
+  - component: {fileID: 912605081}
+  - component: {fileID: 912605080}
+  m_Layer: 0
+  m_Name: DogManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &912605080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912605079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d759434773d6241a21e1dae7e169a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventResponsePairs:
+  - gameEvent: {fileID: 11400000, guid: 37c1a744a81404049b08532034f2c8c3, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 402913365}
+          m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+          m_MethodName: ShowNameInputPrompt
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - gameEvent: {fileID: 11400000, guid: a4240a9930754f14fa1bf09628dd6ca9, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 912605081}
+          m_TargetAssemblyTypeName: CreateDog, Assembly-CSharp
+          m_MethodName: CreateDogObject
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 1
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &912605081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912605079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18625e2f3edded440bee5c3d2cb72243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
+--- !u!4 &912605082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912605079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2857656, y: -0.5133043, z: -0.0061955084}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &985612278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,7 +2268,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 5f4992d9142e49d49ae5425358d2fa7e, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!212 &985612281
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2003,7 +2310,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.67405117, g: 0.764151, b: 0.09011213, a: 1}
   m_FlipX: 0
@@ -2023,12 +2330,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985612278}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.04, y: 1.52, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1134.4128, y: -568.4181, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &986490985
 GameObject:
@@ -2481,7 +2788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 67541ea7c0ebf294f8fa4a93be762183, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!212 &1071934559
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2522,7 +2830,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.49411765, g: 0.8666667, b: 0.5605278, a: 1}
   m_FlipX: 0
@@ -2542,12 +2850,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071934556}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.69, y: -2.37, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1135.763, y: -572.3081, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1139492373
 GameObject:
@@ -2575,11 +2883,11 @@ Transform:
   m_GameObject: {fileID: 1139492373}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.1198488, y: -1.1848236, z: -0.017492572}
+  m_LocalPosition: {x: -1139.5072, y: -569.9318, z: -5.493547}
   m_LocalScale: {x: 17.747763, y: 9.948944, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1172548614}
+  m_Father: {fileID: 899712071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1139492375
 SpriteRenderer:
@@ -2662,11 +2970,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1139492374}
-  - {fileID: 1317055132}
-  - {fileID: 383500226}
-  - {fileID: 299999325}
-  - {fileID: 1312320478}
+  - {fileID: 899712071}
+  - {fileID: 1426339334}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1238781042
@@ -2862,7 +3167,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2882,12 +3187,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294091410}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.81, y: 3.22, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1142.263, y: -566.71814, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1294091413
 CircleCollider2D:
@@ -2937,7 +3242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 42f8b37a2e506d646a01afb6343e1613, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!1 &1312320477
 GameObject:
   m_ObjectHideFlags: 0
@@ -2964,11 +3270,11 @@ Transform:
   m_GameObject: {fileID: 1312320477}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.9241495, y: -3.5911236, z: -0.017492572}
+  m_LocalPosition: {x: -1134.7029, y: -572.33813, z: -5.493547}
   m_LocalScale: {x: 7.578071, y: 4.424794, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1172548614}
+  m_Father: {fileID: 899712071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1312320479
 SpriteRenderer:
@@ -3010,7 +3316,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.4339623, g: 0.2654382, b: 0.08392666, a: 1}
   m_FlipX: 0
@@ -3048,11 +3354,11 @@ Transform:
   m_GameObject: {fileID: 1317055131}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.675851, y: -3.5911236, z: -0.017492572}
+  m_LocalPosition: {x: -1144.303, y: -572.33813, z: -5.493547}
   m_LocalScale: {x: 7.578071, y: 4.424794, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1172548614}
+  m_Father: {fileID: 899712071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1317055133
 SpriteRenderer:
@@ -3094,7 +3400,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.4339623, g: 0.2654382, b: 0.08392666, a: 1}
   m_FlipX: 0
@@ -3189,8 +3495,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1400822697}
-        m_TargetAssemblyTypeName: UIListener, Assembly-CSharp
+      - m_Target: {fileID: 402913365}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: HideDogInfoPanel
         m_Mode: 1
         m_Arguments:
@@ -3298,7 +3604,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3318,12 +3624,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365989227}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.91, y: 1.6, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1144.3629, y: -568.33813, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1365989230
 CircleCollider2D:
@@ -3373,8 +3679,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 42f8b37a2e506d646a01afb6343e1613, type: 2}
-  kennelListener: {fileID: 1982179608}
---- !u!1 &1400822696
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
+--- !u!1 &1426339333
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3382,51 +3689,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1400822698}
-  - component: {fileID: 1400822697}
+  - component: {fileID: 1426339334}
   m_Layer: 0
-  m_Name: UIListener
+  m_Name: KennelDogs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1400822697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1400822696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fb8ad97c90542c48b154e7213d53015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onDogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
-  onBalanceChangedEvent: {fileID: 11400000, guid: 64a055049b440644094cd249d121e68f, type: 2}
-  dogInfoPanel: {fileID: 1844626063}
-  breedText: {fileID: 1031377267}
-  portraitUI: {fileID: 986490987}
-  personalityText: {fileID: 1989398024}
-  priceText: {fileID: 1238781044}
-  balanceText: {fileID: 1529848757}
-  kennelManager: {fileID: 11400000, guid: 15559b1b9f2a22a4ea4eb6c3391f0847, type: 2}
-  playerBalanceManager: {fileID: 11400000, guid: 768a26be37fc5f9448b810384ede9da0, type: 2}
---- !u!4 &1400822698
+--- !u!4 &1426339334
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1400822696}
+  m_GameObject: {fileID: 1426339333}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 457.6914, y: 673.9504, z: -14.07901}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1140.6271, y: 568.747, z: 5.476054}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
+  m_Children:
+  - {fileID: 1795008515}
+  - {fileID: 1294091412}
+  - {fileID: 1365989229}
+  - {fileID: 448176357}
+  - {fileID: 227892668}
+  - {fileID: 884280346}
+  - {fileID: 1468236478}
+  - {fileID: 539835027}
+  - {fileID: 1071934560}
+  - {fileID: 2095557821}
+  - {fileID: 224675457}
+  - {fileID: 1701791532}
+  - {fileID: 985612282}
+  m_Father: {fileID: 1172548614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1468236476
 GameObject:
@@ -3487,7 +3784,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.8666667, g: 0.49411765, b: 0.49411765, a: 1}
   m_FlipX: 0
@@ -3507,12 +3804,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468236476}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.23, y: -1.83, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1146.6829, y: -571.7681, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1468236479
 CircleCollider2D:
@@ -3562,7 +3859,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: b273bc2e7a4abe2469186288c7549011, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!1 &1529848755
 GameObject:
   m_ObjectHideFlags: 0
@@ -3832,7 +4130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 5f4992d9142e49d49ae5425358d2fa7e, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!212 &1701791531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3873,7 +4172,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.67405117, g: 0.764151, b: 0.09011213, a: 1}
   m_FlipX: 0
@@ -3893,12 +4192,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701791528}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.3599992, y: 1.98, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1136.0929, y: -567.9581, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1786697138
 GameObject:
@@ -4093,7 +4392,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4113,12 +4412,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795008513}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.11, y: 1.17, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1141.5629, y: -568.7681, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1795008516
 CircleCollider2D:
@@ -4168,7 +4467,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 42f8b37a2e506d646a01afb6343e1613, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!1 &1844626063
 GameObject:
   m_ObjectHideFlags: 0
@@ -4251,55 +4551,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844626063}
   m_CullTransparentMesh: 1
---- !u!1 &1982179607
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1982179609}
-  - component: {fileID: 1982179608}
-  m_Layer: 0
-  m_Name: KennelListener
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1982179608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982179607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a606822a82b4dc44b2e0b1d5cea5fe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onDogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
-  onBalanceChangedEvent: {fileID: 11400000, guid: 64a055049b440644094cd249d121e68f, type: 2}
-  kennelManager: {fileID: 11400000, guid: 15559b1b9f2a22a4ea4eb6c3391f0847, type: 2}
-  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
-  nameInputField: {fileID: 1007689629}
---- !u!4 &1982179609
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982179607}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 457.6914, y: 673.9504, z: -14.07901}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1989398022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4501,7 +4752,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogData: {fileID: 11400000, guid: 67541ea7c0ebf294f8fa4a93be762183, type: 2}
-  kennelListener: {fileID: 1982179608}
+  dogSelectedEvent: {fileID: 11400000, guid: 9dae0ad66c9c7b647a4ff4016b501a5a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!212 &2095557820
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4542,7 +4794,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.49411765, g: 0.8666667, b: 0.5605278, a: 1}
   m_FlipX: 0
@@ -4562,12 +4814,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095557817}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.580001, y: -1.43, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1132.8729, y: -571.3681, z: -5.493547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426339334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -4577,19 +4829,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 1172548614}
-  - {fileID: 1795008515}
-  - {fileID: 1294091412}
-  - {fileID: 1365989229}
-  - {fileID: 448176357}
-  - {fileID: 227892668}
-  - {fileID: 884280346}
-  - {fileID: 1468236478}
-  - {fileID: 539835027}
-  - {fileID: 1071934560}
-  - {fileID: 2095557821}
-  - {fileID: 224675457}
-  - {fileID: 1701791532}
-  - {fileID: 985612282}
+  - {fileID: 211381909}
   - {fileID: 402913364}
-  - {fileID: 1400822698}
-  - {fileID: 1982179609}
+  - {fileID: 912605082}
