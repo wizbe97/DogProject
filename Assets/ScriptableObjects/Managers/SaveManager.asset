@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0329662f585654ba477ac13adee65a, type: 3}
-  m_Name: GameManager
+  m_Script: {fileID: 11500000, guid: bd2b6153e0ec70d4ba674e1b8e0e8976, type: 3}
+  m_Name: SaveManager
   m_EditorClassIdentifier: 
   playerBalanceManager: {fileID: 11400000, guid: 768a26be37fc5f9448b810384ede9da0, type: 2}
   kennelManager: {fileID: 11400000, guid: 15559b1b9f2a22a4ea4eb6c3391f0847, type: 2}
   dogManager: {fileID: 11400000, guid: 47098a337c664bc4aaadb4f24163b0f6, type: 2}
-  saveManager: {fileID: 11400000, guid: 97824ba241661e74388b6d85cca3790a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}

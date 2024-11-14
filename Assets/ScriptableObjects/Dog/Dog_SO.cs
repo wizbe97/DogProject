@@ -5,7 +5,7 @@ public class DogSO : ScriptableObject
 {
     [Header("Dog Details")]
     public string dogName;
-    public BreedSO breed;
+    public DogBreedSO breed;
     
     [Header("Audio")]
     public AudioClip bark;
@@ -38,3 +38,4 @@ public enum Tricks
     Dance,
     Flip
 }
+

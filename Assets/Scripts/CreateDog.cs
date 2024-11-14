@@ -27,6 +27,7 @@ public class CreateDog : MonoBehaviour
             int dogPrice = selectedDogData.breed.price;
             gameManager.playerBalanceManager.DeductBalance(dogPrice);
             gameManager.dogManager.AddDog(newDog);
+            gameManager.saveManager.AutoSaveAll();
 
             gameManager.kennelManager.ClearSelectedDog();
             FindAnyObjectByType<UIManager>().HideDogInfoPanel();
