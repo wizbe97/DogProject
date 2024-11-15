@@ -7,17 +7,26 @@ public class SpawnPetManagerSO : ScriptableObject
 
     public void SpawnAllDogs(DogManagerSO dogManager)
     {
-        if (dogPrefab == null)
+        if (dogManager == null)
         {
-            Debug.LogError("Dog prefab is not assigned in SpawnPetManager!");
+            Debug.LogError("DogManagerSO is null!");
             return;
         }
 
+        Debug.Log($"Starting to spawn {dogManager.ownedDogs.Count} dogs.");
         foreach (var dogData in dogManager.ownedDogs)
         {
+            if (dogData == null)
+            {
+                Debug.LogError("DogData is null in the ownedDogs list!");
+                continue;
+            }
+
             SpawnDog(dogData);
         }
+        Debug.Log("Finished spawning dogs.");
     }
+
 
     private void SpawnDog(DogData dogData)
     {

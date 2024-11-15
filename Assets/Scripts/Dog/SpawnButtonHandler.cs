@@ -6,14 +6,20 @@ public class SpawnButtonHandler : MonoBehaviour
 
     public void SpawnAllDogs()
     {
-        if (gameManager != null)
+
+        if (gameManager == null)
         {
-            gameManager.spawnPetManager.SpawnAllDogs(gameManager.dogManager);
-            Debug.Log("All dogs have been spawned!");
+            Debug.LogError("GameManagerSO is not assigned!");
+            return;
         }
-        else
+
+        if (gameManager.dogManager == null)
         {
-            Debug.LogError("SpawnPetManager or GameManager is not assigned!");
+            Debug.LogError("DogManagerSO is not assigned in GameManager!");
+            return;
         }
+
+        gameManager.spawnPetManager.SpawnAllDogs(gameManager.dogManager);
+        Debug.Log("All dogs have been spawned!");
     }
 }
