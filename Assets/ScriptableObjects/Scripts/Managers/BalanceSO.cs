@@ -4,4 +4,6 @@ using UnityEngine;
 public class PlayerBalanceSO : ScriptableObject
 {
     public int balance = 1000;
+
+    public int startingBalace = 10000;
 }

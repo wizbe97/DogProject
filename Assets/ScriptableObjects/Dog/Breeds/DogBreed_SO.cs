@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Dog Breed", menuName = "Dog/Breed")]
-public class BreedSO : ScriptableObject
+public class DogBreedSO : ScriptableObject
 {
     [Header("Breed Details")]
     public string breedName;
