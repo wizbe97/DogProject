@@ -36,7 +36,6 @@ public class SaveManagerSO : ScriptableObject
 
         string json = JsonUtility.ToJson(new DogDataWrapper { dogs = dogDataList });
         File.WriteAllText(CombinePath(SaveFileDogPath, isAutoSave ? 0 : currentSlot), json);
-        Debug.Log("Owned dogs saved to slot: " + currentSlot);
     }
     public void SaveOwnedCats(bool isAutoSave = false)
     {
@@ -56,7 +55,6 @@ public class SaveManagerSO : ScriptableObject
 
         string json = JsonUtility.ToJson(new CatDataWrapper { cats = catDataList });
         File.WriteAllText(CombinePath(SaveFileCatPath, isAutoSave ? 0 : currentSlot), json);
-        Debug.Log("Owned cats saved to slot: " + currentSlot);
     }
 
     public void LoadOwnedDogs()
@@ -77,13 +75,10 @@ public class SaveManagerSO : ScriptableObject
                 dog.bark = dogData.bark;
                 gameManager.dogManager.ownedDogs.Add(dogData);
             }
-            Debug.Log("Owned dogs loaded from JSON");
         }
+
         else
-        {
             StartEmpty();
-            Debug.LogWarning("No save file found, starting with empty owned dogs list.");
-        }
     }
     public void LoadOwnedCats()
     {
@@ -102,13 +97,10 @@ public class SaveManagerSO : ScriptableObject
 
                 gameManager.catManager.ownedCats.Add(catData);
             }
-            Debug.Log("Owned cats loaded from JSON");
         }
+
         else
-        {
             StartEmpty();
-            Debug.LogWarning("No save file found, starting with empty owned dogs list.");
-        }
     }
 
     private void StartEmpty()
@@ -124,7 +116,6 @@ public class SaveManagerSO : ScriptableObject
 
         string json = JsonUtility.ToJson(new BalanceData { balance = gameManager.playerBalanceManager.playerBalance.balance });
         File.WriteAllText(CombinePath(SaveFileBalancePath, isAutoSave ? 0 : currentSlot), json);
-        Debug.Log("Balance saved to slot: " + currentSlot);
     }
 
     public void LoadBalance()
@@ -139,7 +130,6 @@ public class SaveManagerSO : ScriptableObject
 
     private void CheckAutoSave()
     {
-        Debug.Log("CURRENT SLOT:" + currentSlot);
         //we make sure we don't override slot 0 when saving manually because slot 0 will be kept for auto saving
         if (currentSlot == 0)
         {
@@ -161,7 +151,6 @@ public class SaveManagerSO : ScriptableObject
         SaveBalance(isAutoSave: true);
 
         SaveTimestamp(0); // Slot 0 for autosave
-        Debug.Log("AutoSave completed with timestamp.");
     }
 
     private void SaveTimestamp(int slot)
@@ -169,7 +158,6 @@ public class SaveManagerSO : ScriptableObject
         string timestampPath = CombinePath($"Slot_{slot}_time", 0);
         string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         File.WriteAllText(timestampPath, timestamp);
-        Debug.Log($"Timestamp saved for slot {slot}: {timestamp}");
     }
 
     public string GetSaveTime(int slot)
@@ -189,8 +177,7 @@ public class SaveManagerSO : ScriptableObject
         SaveOwnedCats();
         SaveBalance();
 
-        SaveTimestamp(currentSlot); // Use the current slot for manual saves
-        Debug.Log($"All data saved to slot {currentSlot} with timestamp.");
+        SaveTimestamp(currentSlot);
     }
 
     public void LoadAllData()
@@ -215,25 +202,25 @@ public class SaveManagerSO : ScriptableObject
         string combinedPath = CombinePath(SaveFileDogPath, slot);
         return File.Exists(combinedPath);
     }
+
     public void RemoveSlot(int slot)
     {
-        string ownedDogsPath = CombinePath(SaveFileDogPath, slot);
-        string balancePath = CombinePath(SaveFileBalancePath, slot);
-        string ownedCatsPath = CombinePath(SaveFileCatPath, slot);
+        string[] paths =
+        {
+        CombinePath(SaveFileDogPath, slot),
+        CombinePath(SaveFileCatPath, slot),
+        CombinePath(SaveFileBalancePath, slot)
+    };
 
-        if (File.Exists(ownedDogsPath))
+        foreach (string path in paths)
         {
-            File.Delete(ownedDogsPath);
-        }
-        if (File.Exists(ownedCatsPath))
-        {
-            File.Delete(ownedCatsPath);
-        }
-        if (File.Exists(balancePath))
-        {
-            File.Delete(balancePath);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
     }
+
     private string CombinePath(string path, int slot)
     {
         return Path.Combine(saveDirectory, $"{path}_{slot}");
@@ -253,14 +240,15 @@ public class DogData
     public AudioClip bark;
     public Personality personality;
     public Tricks[] tricks;
-
 }
+
 [Serializable]
 public class CatDataWrapper
 {
     public List<CatData> cats;
 }
 [Serializable]
+
 public class CatData
 {
     public string catName;
