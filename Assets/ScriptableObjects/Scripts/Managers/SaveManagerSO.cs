@@ -21,7 +21,7 @@ public class SaveManagerSO : ScriptableObject
         CheckAutoSave();
 
         List<DogData> dogDataList = new List<DogData>();
-        foreach (DogData dog in gameManager.dogManager.ownedDogsData)
+        foreach (DogData dog in gameManager.dogManager.ownedDogs)
         {
             DogData data = new DogData
             {
@@ -66,7 +66,7 @@ public class SaveManagerSO : ScriptableObject
             string json = File.ReadAllText(CombinePath(SaveFileDogPath, currentSlot));
             DogDataWrapper dataWrapper = JsonUtility.FromJson<DogDataWrapper>(json);
 
-            gameManager.dogManager.ownedDogsData.Clear();
+            gameManager.dogManager.ownedDogs.Clear();
             foreach (DogData dogData in dataWrapper.dogs)
             {
                 DogSO dog = CreateInstance<DogSO>();
@@ -75,14 +75,7 @@ public class SaveManagerSO : ScriptableObject
                 dog.personality = dogData.personality;
                 dog.tricks = dogData.tricks;
                 dog.bark = dogData.bark;
-#if UNITY_EDITOR
-                string path = $"Assets/ScriptableObjects/Dog/Dogs/PlayerDogs/{dog.dogName}.asset";
-                UnityEditor.AssetDatabase.CreateAsset(dog, path);
-                UnityEditor.AssetDatabase.SaveAssets();
-                UnityEditor.AssetDatabase.Refresh();
-#endif
-                // gameManager.dogManager.ownedDogs.Add(dog);
-                gameManager.dogManager.ownedDogsData.Add(dogData);
+                gameManager.dogManager.ownedDogs.Add(dogData);
             }
             Debug.Log("Owned dogs loaded from JSON");
         }
@@ -106,12 +99,7 @@ public class SaveManagerSO : ScriptableObject
                 cat.catName = catData.catName;
                 cat.breed = catData.breed;
                 cat.personality = catData.personality;
-#if UNITY_EDITOR
-                string path = $"Assets/ScriptableObjects/Cat{cat.catName}.asset";
-                UnityEditor.AssetDatabase.CreateAsset(cat, path);
-                UnityEditor.AssetDatabase.SaveAssets();
-                UnityEditor.AssetDatabase.Refresh();
-#endif
+
                 gameManager.catManager.ownedCats.Add(catData);
             }
             Debug.Log("Owned cats loaded from JSON");
@@ -129,7 +117,7 @@ public class SaveManagerSO : ScriptableObject
         gameManager.dogManager.ClearDoglist();
         gameManager.playerBalanceManager.ClearBalance();
     }
-    
+
     public void SaveBalance(bool isAutoSave = false)
     {
         CheckAutoSave();
@@ -169,7 +157,30 @@ public class SaveManagerSO : ScriptableObject
     public void AutoSaveAll()
     {
         SaveOwnedDogs(isAutoSave: true);
+        SaveOwnedCats(isAutoSave: true);
         SaveBalance(isAutoSave: true);
+
+        SaveTimestamp(0); // Slot 0 for autosave
+        Debug.Log("AutoSave completed with timestamp.");
+    }
+
+    private void SaveTimestamp(int slot)
+    {
+        string timestampPath = CombinePath($"Slot_{slot}_time", 0);
+        string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        File.WriteAllText(timestampPath, timestamp);
+        Debug.Log($"Timestamp saved for slot {slot}: {timestamp}");
+    }
+
+    public string GetSaveTime(int slot)
+    {
+        string timestampPath = CombinePath($"Slot_{slot}_time", 0);
+
+        if (File.Exists(timestampPath))
+            return File.ReadAllText(timestampPath);
+        else
+            return "No save time available.";
+
     }
 
     public void SaveAllData()
@@ -177,6 +188,9 @@ public class SaveManagerSO : ScriptableObject
         SaveOwnedDogs();
         SaveOwnedCats();
         SaveBalance();
+
+        SaveTimestamp(currentSlot); // Use the current slot for manual saves
+        Debug.Log($"All data saved to slot {currentSlot} with timestamp.");
     }
 
     public void LoadAllData()

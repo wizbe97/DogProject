@@ -59,7 +59,7 @@ public class MenuUI : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    autoSaveSlotText.text = "Load 0 \n <size=20>(Auto Saved!)</size>";
+                    autoSaveSlotText.text = "AUTO SAVE\n<size=20>" + saveManager.GetSaveTime(slot)+ "</size>";
                 }
                 removeSlotButtons[i].gameObject.SetActive(true);
                 loadSlotButtons[i].interactable = true;

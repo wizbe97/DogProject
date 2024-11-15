@@ -6,7 +6,7 @@ public class CatManagerSO : ScriptableObject
 {
     public List<CatData> ownedCats = new List<CatData>();
 
-    public void AddDog(CatSO cat)
+    public void AddCat(CatSO cat)
     {
 
         CatData data = new CatData
