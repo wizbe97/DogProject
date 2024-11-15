@@ -62,6 +62,7 @@ public class SaveManagerSO : ScriptableObject
                 UnityEditor.AssetDatabase.Refresh();
 #endif
                 gameManager.dogManager.ownedDogs.Add(dog);
+                gameManager.dogManager.ownedDogsData.Add(dogData);
             }
             Debug.Log("Owned dogs loaded from JSON");
         }
@@ -164,17 +165,6 @@ public class SaveManagerSO : ScriptableObject
     {
         return Path.Combine(saveDirectory, $"{path}_{slot}");
     }
-    // private DogBreedSO FindBreedByName(string breedName)
-    // {
-    //     DogBreedSO breed = Resources.Load<DogBreedSO>($"Breeds/{breedName}");
-    //     if (breed == null)
-    //     {
-    //         Debug.LogError($"Breed '{breedName}' not found in Resources/Dog/Breeds/. Please check the asset name and location.");
-    //     }
-    //     return breed;
-    // }
-
-
 }
 
 [Serializable]
