@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a381e468559b5b408d258a9776c65fc, type: 3}
   m_Name: DogManager
   m_EditorClassIdentifier: 
-  ownedDogs: []
+  ownedDogs:
+  - {fileID: 0}
+  ownedDogsData:
+  - dogName: asdf
+    breed: {fileID: 11400000, guid: f1641348cf49b7343ad1e189bb931a79, type: 2}
+    bark: {fileID: 0}
+    personality: 6
+    tricks: 

@@ -25,5 +25,7 @@ public class PlayerBalanceManagerSO : ScriptableObject
     public void ClearBalance()
     {
         playerBalance.balance = playerBalance.startingBalace;
+        if (onBalanceChangedEvent != null)
+            onBalanceChangedEvent.Raise();
     }
 }
