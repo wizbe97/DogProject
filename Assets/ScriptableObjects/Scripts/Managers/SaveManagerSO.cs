@@ -10,18 +10,18 @@ public class SaveManagerSO : ScriptableObject
 
 
     private const string SaveFileDogPath = "OwnedDogs";
+    private const string SaveFileCatPath = "OwnedCats";
     private const string SaveFileBalancePath = "Balance";
     private string saveDirectory;
 
     public int currentSlot = 1;
-    public int autoSaveSlot = 0;
 
     public void SaveOwnedDogs(bool isAutoSave = false)
     {
         CheckAutoSave();
 
         List<DogData> dogDataList = new List<DogData>();
-        foreach (DogSO dog in gameManager.dogManager.ownedDogs)
+        foreach (DogData dog in gameManager.dogManager.ownedDogsData)
         {
             DogData data = new DogData
             {
@@ -38,6 +38,26 @@ public class SaveManagerSO : ScriptableObject
         File.WriteAllText(CombinePath(SaveFileDogPath, isAutoSave ? 0 : currentSlot), json);
         Debug.Log("Owned dogs saved to slot: " + currentSlot);
     }
+    public void SaveOwnedCats(bool isAutoSave = false)
+    {
+        CheckAutoSave();
+
+        List<CatData> catDataList = new List<CatData>();
+        foreach (CatData cat in gameManager.catManager.ownedCats)
+        {
+            CatData data = new CatData
+            {
+                catName = cat.catName,
+                breed = cat.breed,
+                personality = cat.personality,
+            };
+            catDataList.Add(data);
+        }
+
+        string json = JsonUtility.ToJson(new CatDataWrapper { cats = catDataList });
+        File.WriteAllText(CombinePath(SaveFileCatPath, isAutoSave ? 0 : currentSlot), json);
+        Debug.Log("Owned cats saved to slot: " + currentSlot);
+    }
 
     public void LoadOwnedDogs()
     {
@@ -46,7 +66,7 @@ public class SaveManagerSO : ScriptableObject
             string json = File.ReadAllText(CombinePath(SaveFileDogPath, currentSlot));
             DogDataWrapper dataWrapper = JsonUtility.FromJson<DogDataWrapper>(json);
 
-            gameManager.dogManager.ownedDogs.Clear();
+            gameManager.dogManager.ownedDogsData.Clear();
             foreach (DogData dogData in dataWrapper.dogs)
             {
                 DogSO dog = CreateInstance<DogSO>();
@@ -55,7 +75,13 @@ public class SaveManagerSO : ScriptableObject
                 dog.personality = dogData.personality;
                 dog.tricks = dogData.tricks;
                 dog.bark = dogData.bark;
-                gameManager.dogManager.ownedDogs.Add(dog);
+#if UNITY_EDITOR
+                string path = $"Assets/ScriptableObjects/Dog/Dogs/PlayerDogs/{dog.dogName}.asset";
+                UnityEditor.AssetDatabase.CreateAsset(dog, path);
+                UnityEditor.AssetDatabase.SaveAssets();
+                UnityEditor.AssetDatabase.Refresh();
+#endif
+                // gameManager.dogManager.ownedDogs.Add(dog);
                 gameManager.dogManager.ownedDogsData.Add(dogData);
             }
             Debug.Log("Owned dogs loaded from JSON");
@@ -66,12 +92,44 @@ public class SaveManagerSO : ScriptableObject
             Debug.LogWarning("No save file found, starting with empty owned dogs list.");
         }
     }
+    public void LoadOwnedCats()
+    {
+        if (File.Exists(CombinePath(SaveFileCatPath, currentSlot)))
+        {
+            string json = File.ReadAllText(CombinePath(SaveFileCatPath, currentSlot));
+            CatDataWrapper dataWrapper = JsonUtility.FromJson<CatDataWrapper>(json);
+
+            gameManager.catManager.ownedCats.Clear();
+            foreach (CatData catData in dataWrapper.cats)
+            {
+                CatSO cat = CreateInstance<CatSO>();
+                cat.catName = catData.catName;
+                cat.breed = catData.breed;
+                cat.personality = catData.personality;
+#if UNITY_EDITOR
+                string path = $"Assets/ScriptableObjects/Cat{cat.catName}.asset";
+                UnityEditor.AssetDatabase.CreateAsset(cat, path);
+                UnityEditor.AssetDatabase.SaveAssets();
+                UnityEditor.AssetDatabase.Refresh();
+#endif
+                gameManager.catManager.ownedCats.Add(catData);
+            }
+            Debug.Log("Owned cats loaded from JSON");
+        }
+        else
+        {
+            StartEmpty();
+            Debug.LogWarning("No save file found, starting with empty owned dogs list.");
+        }
+    }
 
     private void StartEmpty()
     {
+        gameManager.catManager.ClearCatData();
         gameManager.dogManager.ClearDoglist();
         gameManager.playerBalanceManager.ClearBalance();
     }
+    
     public void SaveBalance(bool isAutoSave = false)
     {
         CheckAutoSave();
@@ -88,7 +146,6 @@ public class SaveManagerSO : ScriptableObject
             string json = File.ReadAllText(CombinePath(SaveFileBalancePath, currentSlot));
             BalanceData balanceData = JsonUtility.FromJson<BalanceData>(json);
             gameManager.playerBalanceManager.playerBalance.balance = balanceData.balance;
-            gameManager.playerBalanceManager.onBalanceChangedEvent.Raise();
         }
     }
 
@@ -118,6 +175,7 @@ public class SaveManagerSO : ScriptableObject
     public void SaveAllData()
     {
         SaveOwnedDogs();
+        SaveOwnedCats();
         SaveBalance();
     }
 
@@ -129,6 +187,7 @@ public class SaveManagerSO : ScriptableObject
             Directory.CreateDirectory(saveDirectory);
         }
         LoadOwnedDogs();
+        LoadOwnedCats();
         LoadBalance();
     }
 
@@ -146,10 +205,15 @@ public class SaveManagerSO : ScriptableObject
     {
         string ownedDogsPath = CombinePath(SaveFileDogPath, slot);
         string balancePath = CombinePath(SaveFileBalancePath, slot);
+        string ownedCatsPath = CombinePath(SaveFileCatPath, slot);
 
         if (File.Exists(ownedDogsPath))
         {
             File.Delete(ownedDogsPath);
+        }
+        if (File.Exists(ownedCatsPath))
+        {
+            File.Delete(ownedCatsPath);
         }
         if (File.Exists(balancePath))
         {
@@ -175,6 +239,19 @@ public class DogData
     public AudioClip bark;
     public Personality personality;
     public Tricks[] tricks;
+
+}
+[Serializable]
+public class CatDataWrapper
+{
+    public List<CatData> cats;
+}
+[Serializable]
+public class CatData
+{
+    public string catName;
+    public CatBreedSO breed;
+    public CatPersonality personality;
 
 }
 
