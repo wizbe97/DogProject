@@ -4,13 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DogManager", menuName = "Managers/DogManager")]
 public class DogManagerSO : ScriptableObject
 {
-    public List<DogSO> ownedDogs = new List<DogSO>();
-    public List<DogData> ownedDogsData = new List<DogData>();
+    public List<DogData> ownedDogs = new List<DogData>();
 
     public void AddDog(DogSO dog)
     {
-        ownedDogs.Add(dog);
-
         DogData data = new DogData
         {
             dogName = dog.dogName,
@@ -20,21 +17,16 @@ public class DogManagerSO : ScriptableObject
             bark = dog.bark
         };
 
-        ownedDogsData.Add(data);
+        ownedDogs.Add(data);
     }
 
-    public List<DogSO> GetAllDogs()
-    {
-        return new List<DogSO>(ownedDogs);
-    }
     public List<DogData> GetAllDogsData()
     {
-        return new List<DogData>(ownedDogsData);
+        return new List<DogData>(ownedDogs);
     }
 
     public void ClearDoglist()
     {
         ownedDogs.Clear();
-        ownedDogsData.Clear();
     }
 }

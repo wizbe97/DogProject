@@ -15,4 +15,5 @@ MonoBehaviour:
   playerBalanceManager: {fileID: 11400000, guid: 768a26be37fc5f9448b810384ede9da0, type: 2}
   kennelManager: {fileID: 11400000, guid: 15559b1b9f2a22a4ea4eb6c3391f0847, type: 2}
   dogManager: {fileID: 11400000, guid: 47098a337c664bc4aaadb4f24163b0f6, type: 2}
+  catManager: {fileID: 11400000, guid: b7be28b89744a58488598ea09ce6b0d8, type: 2}
   saveManager: {fileID: 11400000, guid: 97824ba241661e74388b6d85cca3790a, type: 2}

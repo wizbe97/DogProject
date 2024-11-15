@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a381e468559b5b408d258a9776c65fc, type: 3}
-  m_Name: DogManager
+  m_Script: {fileID: 11500000, guid: 7c4d86aa8abb0b046ba9ffeef30289b7, type: 3}
+  m_Name: TestCat
   m_EditorClassIdentifier: 
-  ownedDogs: []
+  catName: Test Cat
+  breed: {fileID: 11400000, guid: 223c931960d683f4eabdc0c957776b5c, type: 2}
+  personality: 0
