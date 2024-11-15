@@ -17,4 +17,4 @@ MonoBehaviour:
     He has an even and stable temperament, great charm, and an outgoing, loving disposition.
   price: 350
   portrait: {fileID: 0}
-  variations: []
+  appearance: {fileID: 21300000, guid: fac56faf344f74347b1db51c62fe7757, type: 3}

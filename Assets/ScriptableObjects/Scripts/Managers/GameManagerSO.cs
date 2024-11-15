@@ -8,4 +8,5 @@ public class GameManagerSO : ScriptableObject
     public DogManagerSO dogManager;
     public CatManagerSO catManager;
     public SaveManagerSO saveManager;
+    public SpawnPetManagerSO spawnPetManager;
 }

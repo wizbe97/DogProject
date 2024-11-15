@@ -11,5 +11,5 @@ public class DogBreedSO : ScriptableObject
 
     [Header("Breed Appearance")]
     public Sprite portrait;
-    public List<Sprite> variations;
+    public Sprite appearance;
 }

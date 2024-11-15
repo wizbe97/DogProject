@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.Analytics;
 
 [CreateAssetMenu(fileName = "New Dog", menuName = "Dog/Dog")]
 public class DogSO : ScriptableObject
 {
     [Header("Dog Details")]
     public string dogName;
+    public DogGender gender;
     public DogBreedSO breed;
     
     [Header("Audio")]
@@ -37,5 +39,10 @@ public enum Tricks
     Speak,
     Dance,
     Flip
+}
+
+public enum DogGender {
+    Male,
+    Female
 }
 

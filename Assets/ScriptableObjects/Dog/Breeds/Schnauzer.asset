@@ -17,4 +17,4 @@ MonoBehaviour:
     They\u2019re playful, loyal, and make great watchdogs with their alert personality!"
   price: 500
   portrait: {fileID: 0}
-  variations: []
+  appearance: {fileID: 21300000, guid: e58c782e963bc4444b4bb9ac239e5bf2, type: 3}
