@@ -7,9 +7,6 @@ public class DogComponent : MonoBehaviour
     public void InitializeFromData(DogData data)
     {
         dogData = data;
-
-        // Optionally log details
-        Debug.Log($"Initialized DogComponent with Name: {dogData.dogName}, Breed: {dogData.breed.breedName}, Personality: {dogData.personality}");
     }
 
     public DogData GetDogData()

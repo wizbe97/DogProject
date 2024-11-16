@@ -4361,7 +4361,7 @@ MonoBehaviour:
   - {fileID: 5939192951223515559}
   - {fileID: 8348568213314053419}
   - {fileID: 8516350213632022425}
-  saveManager: {fileID: 11400000, guid: 97824ba241661e74388b6d85cca3790a, type: 2}
+  gameManager: {fileID: 11400000, guid: 6f13b1d6db2db0a48b510a7612f79f5e, type: 2}
 --- !u!1 &8328320600208844689
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class GameplayUI : MonoBehaviour
     public Button saveAndQuitButton;
     public Button menuConfirmButton;
 
-    public SaveManagerSO saveManager;
+    public GameManagerSO gameManager;
 
     void Start()
     {
@@ -68,7 +68,7 @@ public class GameplayUI : MonoBehaviour
 
     private void Save()
     {
-        saveManager.SaveAllData();
+        gameManager.saveManager.SaveAllData();
         UpdateSlotButton(true);
     }
 
@@ -99,7 +99,7 @@ public class GameplayUI : MonoBehaviour
 
     private void SaveAndQuit()
     {
-        saveManager.SaveAllData();
+        gameManager.saveManager.SaveAllData();
         Time.timeScale = 1;
         SceneManager.LoadScene("Menu");
     }

@@ -24,7 +24,8 @@ public class MenuUI : MonoBehaviour
     public Button[] loadSlotButtons;
     public Button[] removeSlotButtons;
 
-    public SaveManagerSO saveManager;
+    public GameManagerSO gameManager;
+
 
     void Start()
     {
@@ -55,11 +56,11 @@ public class MenuUI : MonoBehaviour
         for (int i = 0; i < loadSlotButtons.Length; i++)
         {
             int slot = i;
-            if (saveManager.IsDataSaved(slot))
+            if (gameManager.saveManager.IsDataSaved(slot))
             {
                 if (i == 0)
                 {
-                    autoSaveSlotText.text = "AUTO SAVE\n<size=20>" + saveManager.GetSaveTime(slot)+ "</size>";
+                    autoSaveSlotText.text = "AUTO SAVE\n<size=20>" + gameManager.saveManager.GetSaveTime(slot)+ "</size>";
                 }
                 removeSlotButtons[i].gameObject.SetActive(true);
                 loadSlotButtons[i].interactable = true;
@@ -77,7 +78,7 @@ public class MenuUI : MonoBehaviour
         for (int i = 0; i < chooseSlotButtons.Length; i++)
         {
             int slot = i;
-            if (saveManager.IsDataSaved(slot))
+            if (gameManager.saveManager.IsDataSaved(slot))
             {
                 chooseSlotLabels[i].text = "Override";
                 if (i == 0)
@@ -96,7 +97,7 @@ public class MenuUI : MonoBehaviour
 
     private void OnSlotButtonClicked(int slot)
     {
-        if (saveManager.IsDataSaved(slot))
+        if (gameManager.saveManager.IsDataSaved(slot))
         {
             Load(slot);
         }
@@ -110,20 +111,20 @@ public class MenuUI : MonoBehaviour
 
     private void OnRemoveSlotClicked(int slot)
     {
-        saveManager.RemoveSlot(slot);
+        gameManager.saveManager.RemoveSlot(slot);
         UpdateSlotButtons();
     }
 
     private void Load(int slot)
     {
-        saveManager.currentSlot = slot;
+        gameManager.saveManager.currentSlot = slot;
         SceneManager.LoadScene("Kennel");
     }
 
     private void OverrideSlot(int slot)
     {
-        saveManager.RemoveSlot(slot);
-        saveManager.currentSlot = slot;
+        gameManager.saveManager.RemoveSlot(slot);
+        gameManager.saveManager.currentSlot = slot;
         SceneManager.LoadScene("Kennel");
     }
 
