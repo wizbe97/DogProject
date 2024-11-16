@@ -11,6 +11,7 @@ public class DogManagerSO : ScriptableObject
         DogData data = new DogData
         {
             dogName = dog.dogName,
+            gender = dog.gender,
             breed = dog.breed,
             personality = dog.personality,
             tricks = dog.tricks,

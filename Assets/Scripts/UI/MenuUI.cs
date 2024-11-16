@@ -119,6 +119,7 @@ public class MenuUI : MonoBehaviour
     {
         gameManager.saveManager.currentSlot = slot;
         SceneManager.LoadScene("Kennel");
+        FindAnyObjectByType<UIManager>().HideDogInfoPanel();
     }
 
     private void OverrideSlot(int slot)

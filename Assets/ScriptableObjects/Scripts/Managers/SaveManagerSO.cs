@@ -236,6 +236,7 @@ public class DogDataWrapper
 public class DogData
 {
     public string dogName;
+    public DogGender gender;
     public DogBreedSO breed;
     public AudioClip bark;
     public Personality personality;

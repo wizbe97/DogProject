@@ -13,6 +13,7 @@ public class CreateDog : MonoBehaviour
             DogSO newDog = ScriptableObject.CreateInstance<DogSO>();
             newDog.breed = selectedDogData.breed;
             newDog.personality = gameManager.kennelManager.GetSelectedPersonality();
+            newDog.gender = gameManager.kennelManager.GetSelectedGender();
             newDog.dogName = dogName;
             Debug.Log("Dog created and named: " + newDog.dogName);
 

@@ -7,11 +7,14 @@ public class DogInfo : MonoBehaviour
     public GameManagerSO gameManager;
 
     private Personality assignedPersonality;
+    private DogGender assignedGender;
     private bool personalityAssigned = false;
+    private bool genderAssigned = false;
 
     private void Start()
     {
         AssignRandomPersonality();
+        AssignRandomGender();
     }
 
     private void AssignRandomPersonality()
@@ -23,12 +26,23 @@ public class DogInfo : MonoBehaviour
         }
     }
 
+    private void AssignRandomGender()
+    {
+        if (!genderAssigned)
+        {
+            assignedGender = (DogGender)Random.Range(0, System.Enum.GetValues(typeof(DogGender)).Length);
+            genderAssigned = true;
+        }
+    }
+
+
     private void OnMouseUp()
     {
         Debug.Log("Dog selected: " + dogData.dogName + " with personality: " + assignedPersonality);
         gameManager.kennelManager.SelectDog(dogData);
         gameManager.kennelManager.selectedPersonality = assignedPersonality;
-        
+        gameManager.kennelManager.selectedGender = assignedGender;
+
         if (dogSelectedEvent != null)
             dogSelectedEvent.Raise();
     }
@@ -36,5 +50,10 @@ public class DogInfo : MonoBehaviour
     public Personality GetAssignedPersonality()
     {
         return assignedPersonality;
+    }
+
+    public DogGender GetAssignedGender()
+    {
+        return assignedGender;
     }
 }

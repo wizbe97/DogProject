@@ -5,7 +5,8 @@ public class KennelManagerSO : ScriptableObject
 {
     public DogSO selectedDogData;
     public Personality selectedPersonality;
-    public string dogName; // Store the player's chosen name here
+    public DogGender selectedGender;
+    [HideInInspector] public string dogName;
 
     public void SelectDog(DogSO dogData)
     {
@@ -20,6 +21,11 @@ public class KennelManagerSO : ScriptableObject
     public Personality GetSelectedPersonality()
     {
         return selectedPersonality;
+    }
+
+    public DogGender GetSelectedGender()
+    {
+        return selectedGender;
     }
 
     public void SetDogName(string name)
