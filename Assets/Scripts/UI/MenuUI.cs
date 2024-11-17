@@ -27,7 +27,7 @@ public class MenuUI : MonoBehaviour
     public GameManagerSO gameManager;
 
 
-    void Start()
+    private void Start()
     {
         loadGameBackButton.onClick.AddListener(LoadGameBackClick);
         chooseSlotBackButton.onClick.AddListener(ChooseSlotBackClick);
@@ -60,7 +60,7 @@ public class MenuUI : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    autoSaveSlotText.text = "AUTO SAVE\n<size=20>" + gameManager.saveManager.GetSaveTime(slot)+ "</size>";
+                    autoSaveSlotText.text = "AUTO SAVE\n<size=20>" + gameManager.saveManager.GetSaveTime(slot) + "</size>";
                 }
                 removeSlotButtons[i].gameObject.SetActive(true);
                 loadSlotButtons[i].interactable = true;
@@ -99,7 +99,11 @@ public class MenuUI : MonoBehaviour
     {
         if (gameManager.saveManager.IsDataSaved(slot))
         {
-            Load(slot);
+            gameManager.saveManager.currentSlot = slot;
+            if (gameManager.dogManager.ownedDogs.Count == 0)
+                LoadNewGame();
+            else
+                LoadExistingGame();
         }
         UpdateSlotButtons();
     }
@@ -115,11 +119,14 @@ public class MenuUI : MonoBehaviour
         UpdateSlotButtons();
     }
 
-    private void Load(int slot)
+    private void LoadNewGame()
     {
-        gameManager.saveManager.currentSlot = slot;
         SceneManager.LoadScene("Kennel");
-        FindAnyObjectByType<UIManager>().HideDogInfoPanel();
+    }
+
+    private void LoadExistingGame()
+    {
+        SceneManager.LoadScene("House");
     }
 
     private void OverrideSlot(int slot)
@@ -154,4 +161,4 @@ public class MenuUI : MonoBehaviour
         loadGamePanel.SetActive(true);
         UpdateSlotButtons();
     }
-}
+} 
