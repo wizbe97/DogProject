@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: KennelPug
   m_EditorClassIdentifier: 
   dogName: 
+  gender: 0
   breed: {fileID: 11400000, guid: 28190efb5046e244c9643587ed2e7301, type: 2}
   bark: {fileID: 0}
   personality: 0
   tricks: 
+  stats: {fileID: 11400000, guid: a2bbdd24d50ab0a4f832a894f4bc9daf, type: 2}

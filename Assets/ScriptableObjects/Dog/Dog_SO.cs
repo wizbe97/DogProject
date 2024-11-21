@@ -8,13 +8,17 @@ public class DogSO : ScriptableObject
     public string dogName;
     public DogGender gender;
     public DogBreedSO breed;
-    
+
     [Header("Audio")]
     public AudioClip bark;
 
     [Header("Personality & Abilities")]
     public Personality personality;
     public Tricks[] tricks;
+
+    [Header("Dog Stats")]
+    public DogStatsSO stats;
+
 }
 
 public enum Personality
@@ -41,7 +45,8 @@ public enum Tricks
     Flip
 }
 
-public enum DogGender {
+public enum DogGender
+{
     Male,
     Female
 }

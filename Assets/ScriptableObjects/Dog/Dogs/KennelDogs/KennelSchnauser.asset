@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: KennelSchnauser
   m_EditorClassIdentifier: 
   dogName: 
+  gender: 0
   breed: {fileID: 11400000, guid: f1641348cf49b7343ad1e189bb931a79, type: 2}
   bark: {fileID: 0}
   personality: 5
   tricks: 
+  stats: {fileID: 11400000, guid: a2bbdd24d50ab0a4f832a894f4bc9daf, type: 2}
