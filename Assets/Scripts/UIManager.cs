@@ -46,9 +46,16 @@ public class UIManager : MonoBehaviour
 
     public void ShowNameInputPrompt()
     {
+        // Enable the input field and ensure it's active
         nameInputField.gameObject.SetActive(true);
+
+        // Activate the input field to prompt the keyboard
+        nameInputField.ActivateInputField();
+
+        // Add listener for when the player finishes typing
         nameInputField.onEndEdit.AddListener(OnNameEntered);
     }
+
 
     private void OnNameEntered(string enteredName)
     {

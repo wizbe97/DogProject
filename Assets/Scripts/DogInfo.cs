@@ -35,8 +35,30 @@ public class DogInfo : MonoBehaviour
         }
     }
 
-
+    // This works on PC
     private void OnMouseUp()
+    {
+        HandleSelection();
+    }
+
+    private void Update()
+    {
+        // Handle mobile touch input
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Ended)
+            {
+                // Check if this object is tapped
+                if (IsTouchedObject(touch.position))
+                {
+                    HandleSelection();
+                }
+            }
+        }
+    }
+
+    private void HandleSelection()
     {
         Debug.Log("Dog selected: " + dogData.dogName + " with personality: " + assignedPersonality);
         gameManager.kennelManager.SelectDog(dogData);
@@ -45,6 +67,20 @@ public class DogInfo : MonoBehaviour
 
         if (dogSelectedEvent != null)
             dogSelectedEvent.Raise();
+    }
+
+    private bool IsTouchedObject(Vector3 touchPosition)
+    {
+        // Cast a ray from the touch position to check if it hits this object
+        Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.transform == transform;
+        }
+
+        return false;
     }
 
     public Personality GetAssignedPersonality()
