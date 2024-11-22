@@ -17,3 +17,4 @@ MonoBehaviour:
   dogManager: {fileID: 11400000, guid: 47098a337c664bc4aaadb4f24163b0f6, type: 2}
   catManager: {fileID: 11400000, guid: b7be28b89744a58488598ea09ce6b0d8, type: 2}
   saveManager: {fileID: 11400000, guid: 97824ba241661e74388b6d85cca3790a, type: 2}
+  spawnPetManager: {fileID: 11400000, guid: 899724d64e907994fb118b663295669c, type: 2}

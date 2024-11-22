@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a381e468559b5b408d258a9776c65fc, type: 3}
-  m_Name: DogManager
+  m_Script: {fileID: 11500000, guid: ef51c0316b1533e49b8d5d77f27c61cb, type: 3}
+  m_Name: SpawnPetManager
   m_EditorClassIdentifier: 
-  ownedDogs:
-  - dogName: Nathan
-    gender: 0
-    breed: {fileID: 11400000, guid: 8525d910b050d7242ac18d0383b2e2b0, type: 2}
-    bark: {fileID: 0}
-    personality: 2
-    tricks: 
+  dogPrefab: {fileID: 2913759656829020816, guid: 31de014ec4b052f479b34685db8c7291, type: 3}
